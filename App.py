@@ -17,22 +17,17 @@ def main():
     response = sp.playlist_items(everything_uri,
                                  offset=track_num,
                                  limit=1,
-                                 fields='items.track')
+                                 fields='items.track.artists,items.track.name')
 
-    print(response.get('items'))
+    artists = (response.get('items')[0]).get('track').get('artists')
 
-    #while True:
-        #response = sp.playlist_items(everything_uri,
-        #                             offset=offset,
-        #                             fields='items.track.id,total',
-        #                             additional_types=['track'])
+    print('artists: ')
+    for artist in artists:
+        print(artist['name'])
 
-        #if len(response['items']) == 0:
-        #    break
+    track = (response.get('items')[0]).get('track').get('name')
 
-        #print(response['items'])
-        #offset = offset + len(response['items'])
-        #print(offset, "/", response['total'])
+    print('\ntrack:\n', track)
 
 
 def get_playlist_size(sp, uri):
@@ -42,17 +37,6 @@ def get_playlist_size(sp, uri):
     print("\nplaylist size: ", playlist_size)
 
     return playlist_size
-
-
-def get_track_index(playlist_size):
-    track_num = random.randrange(playlist_size)
-    print("\ntrack num: ", track_num)
-    set_index = track_num // 100
-    print("\nset index: ", set_index)
-    track_index = track_num % 100
-    print("\ntrack index: ", track_index)
-
-    return set_index, track_index
 
 
 if __name__ == "__main__":

@@ -3,7 +3,7 @@ import random
 from spotipy.oauth2 import SpotifyClientCredentials
 
 
-def main():
+def grab_song():
     sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
 
     everything_uri = 'spotify:playlist:7422MBQ8Hy1vJMoKCS7j2W'
@@ -11,8 +11,6 @@ def main():
     playlist_size = get_playlist_size(sp, everything_uri)
 
     track_num = random.randrange(playlist_size)
-
-    offset = track_num
 
     response = sp.playlist_items(everything_uri,
                                  offset=track_num,
@@ -40,4 +38,4 @@ def get_playlist_size(sp, uri):
 
 
 if __name__ == "__main__":
-    main()
+    grab_song()
